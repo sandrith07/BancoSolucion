@@ -1,0 +1,9 @@
+C:\Users\Acer\source\repos\BancoSolucion\Banco.Core.Domain\bin\Debug\netstandard2.0\Banco.Core.Domain.deps.json
+C:\Users\Acer\source\repos\BancoSolucion\Banco.Core.Domain\bin\Debug\netstandard2.0\Banco.Core.Domain.dll
+C:\Users\Acer\source\repos\BancoSolucion\Banco.Core.Domain\bin\Debug\netstandard2.0\Banco.Core.Domain.pdb
+C:\Users\Acer\source\repos\BancoSolucion\Banco.Core.Domain\obj\Debug\netstandard2.0\Banco.Core.Domain.csprojAssemblyReference.cache
+C:\Users\Acer\source\repos\BancoSolucion\Banco.Core.Domain\obj\Debug\netstandard2.0\Banco.Core.Domain.AssemblyInfoInputs.cache
+C:\Users\Acer\source\repos\BancoSolucion\Banco.Core.Domain\obj\Debug\netstandard2.0\Banco.Core.Domain.AssemblyInfo.cs
+C:\Users\Acer\source\repos\BancoSolucion\Banco.Core.Domain\obj\Debug\netstandard2.0\Banco.Core.Domain.csproj.CoreCompileInputs.cache
+C:\Users\Acer\source\repos\BancoSolucion\Banco.Core.Domain\obj\Debug\netstandard2.0\Banco.Core.Domain.dll
+C:\Users\Acer\source\repos\BancoSolucion\Banco.Core.Domain\obj\Debug\netstandard2.0\Banco.Core.Domain.pdb
