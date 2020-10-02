@@ -144,6 +144,11 @@ namespace Banco.Domain.Test
         //2.2 El saldo mínimo de la cuenta deberá ser de 20 mil pesos.
         //2.3 Los primeros 3 retiros del mes no tendrán costo.
         //2.4 Del cuarto retiro en adelante del mes tendrán un valor de 5 mil pesos.
+        //Dado El cliente tiene una cuenta de ahorro con saldo de $10.000
+        //Número 10001, Nombre “Cuenta ejemplo”,
+        //Cuando Va a retirar el valor  de $15.000
+        //Entonces El sistema no registrará el retiro
+        //AND presentará el mensaje. “No tiene fondos suficientes (minimo 20000)"”.
 
 
         [Test]
@@ -152,14 +157,17 @@ namespace Banco.Domain.Test
             //Preparar
             var cuentaAhorro = new CuentaAhorro(numero: "10001", nombre: "Cuenta Ahorro", ciudad: "Valledupar");
             //Acción
-            var resultado = cuentaAhorro.Retirar(10000, "01", "12", "2020", "Valledupar");
+            var consignacion = cuentaAhorro.Consignar(50000, "01", "12", "2020", "Valledupar");
+            var retiro1 = cuentaAhorro.Retirar(40000, "01", "12", "2020", "Valledupar");
+            var retiro2 = cuentaAhorro.Retirar(15000, "01", "12", "2020", "Valledupar");
             //Verificación
-            Assert.AreEqual("No tiene fondos suficientes (minimo 20000)", resultado);
+            Assert.AreEqual("No tiene fondos suficientes (minimo 20000)", retiro2);
+            Assert.AreEqual(cuentaAhorro.Saldo, 10000);
         }
 
 
 
-        //Escenario2: Los primeros 3 retiros del mes no tendrán costo
+        //Escenario1: El valor a retirar se debe descontar del saldo de la cuenta, la cual debe tener minimo 20000 de saldo
         //HU 2.
         //Como Usuario quiero realizar retiros a una cuenta de ahorro para obtener el dinero en efectivo
         //Criterios de Aceptación
@@ -167,6 +175,11 @@ namespace Banco.Domain.Test
         //2.2 El saldo mínimo de la cuenta deberá ser de 20 mil pesos.
         //2.3 Los primeros 3 retiros del mes no tendrán costo.
         //2.4 Del cuarto retiro en adelante del mes tendrán un valor de 5 mil pesos.
+        //Dado El cliente tiene una cuenta de ahorro con saldo de $100.000
+        //Número 10001, Nombre “Cuenta ejemplo”, 
+        //Cuando Va a retirar por tercera vez el valor de $20000
+        //Entonces El sistema registrará el retiro
+        //AND presentará el mensaje. “transaccion sin costo”.
 
 
         [Test]
@@ -186,7 +199,7 @@ namespace Banco.Domain.Test
         }
 
 
-        //Escenario2: Del cuarto retiro en adelante del mes tendrán un valor de 5 mil pesos.
+        //Escenario1: El valor a retirar se debe descontar del saldo de la cuenta, la cual debe tener minimo 20000 de saldo
         //HU 2.
         //Como Usuario quiero realizar retiros a una cuenta de ahorro para obtener el dinero en efectivo
         //Criterios de Aceptación
@@ -194,8 +207,13 @@ namespace Banco.Domain.Test
         //2.2 El saldo mínimo de la cuenta deberá ser de 20 mil pesos.
         //2.3 Los primeros 3 retiros del mes no tendrán costo.
         //2.4 Del cuarto retiro en adelante del mes tendrán un valor de 5 mil pesos.
+        //Dado El cliente tiene una cuenta de ahorro con saldo de $100.000
+        //Número 10001, Nombre “Cuenta ejemplo”, 
+        //Cuando Va a retirar por cuarta vez el valor de $10000
+        //Entonces El sistema registrará el retiro cobrando una comision de 5 mil pesos
+        //AND presentará el mensaje. "usted sobrepaso el número de transacciones gratis, por lo tanto se le descontaran 5 mil ".
 
-        
+
         [Test]
         public void RetirosConCostoCuentaAhorroTest()
         {  
