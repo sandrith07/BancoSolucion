@@ -96,6 +96,28 @@ namespace Banco.Domain.Test
         }
 
 
+        /* Consignar a la cuenta teniendo deuda
+        HU: Como Usuario quiero realizar retiros a una cuenta corriente para salvaguardar el dinero.
+        Criterios de Aceptación
+        4.1 El valor a retirar se debe descontar del saldo de la cuenta.
+        4.2 El saldo mínimo deberá ser mayor o igual al cupo de sobregiro.
+        4.3 El retiro tendrá un costo del 4×Mil
+        */
+        [Test]
+
+        public void ConsignarALaCuentaTeniendoDeudaCuentaCorrienteTest()
+        {
+            //Preparar
+            var cuentaCorriente = new CuentaCorriente(numero: "10001", nombre: "Cuenta Corriente", ciudad: "Valledupar", sobreGiro: 1000000);
+            //Acción
+            var coonsignacion = cuentaCorriente.Consignar(700000, "01", "12", "2020", "Valledupar");
+            var retiro = cuentaCorriente.Retirar(1700000, "01", "12", "2020", "Valledupar");
+            //Verificación
+            Assert.AreEqual("Su retiro ha sido exitoso", retiro);
+            Assert.AreEqual(cuentaCorriente.deuda, 1706800);
+
+        }
+
 
 
     }

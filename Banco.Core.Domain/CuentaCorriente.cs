@@ -20,7 +20,12 @@ namespace Banco.Core.Domain
             if (valorConsignacion < 100000 && NoTieneConsignacion()) return "El valor mínimo de la primera consignación debe ser de $100.000 mil pesos. Su nuevo saldo es $0 pesos";
 
             var saldoAnterior = Saldo;
-            Saldo += valorConsignacion;
+            
+
+            deuda -= valorConsignacion;
+            SobreGiro += valorConsignacion;
+            Saldo = SobreGiro;
+
             _movimientos.Add(new CuentaBancariaMovimiento(saldoAnterior, valorConsignacion, 0, "CONSIGNACION", diaConsignacion, mesConsignacion, anioConsignacion, ciudadConsignacion));
             return "Su consignación ha sido exitosa";
 
@@ -31,7 +36,7 @@ namespace Banco.Core.Domain
             Saldo = SobreGiro;
             if (valorRetiro <= 0) return "No puede retirar menos de cero pesos";
 
-            var cuatroPorMil = valorRetiro-(valorRetiro * 4) / 1000;
+            var cuatroPorMil = valorRetiro+(valorRetiro * 4) / 1000;
             var saldoAnterior = Saldo;
             deuda = cuatroPorMil;
             SobreGiro -= valorRetiro;
