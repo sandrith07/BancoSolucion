@@ -26,7 +26,7 @@ namespace Banco.Domain.Test
         // y reducirá de manera equivalente el saldo.         
         //Dado El cliente tiene una tarjeta de credito
         //Número 10001, Nombre “Cuenta ejemplo”, Cupo de 5000000
-        //Cuando Va a abonar un valor menor o igual a Cero
+        //Cuando abona un valor menor o igual a Cero
         //Entonces El sistema no registrará la consignación
         //AND presentará el mensaje. “El valor mínimo de la primera consignación debe ser mayor a cero pesos”.
 
@@ -55,7 +55,7 @@ namespace Banco.Domain.Test
         // y reducirá de manera equivalente el saldo.         
         //Dado El cliente tiene una tarjeta de credito
         //Número 10001, Nombre “Cuenta ejemplo”, Cupo de 30000
-        //Cuando Va a abonar el valor de 31000
+        //Cuando  abona el valor de 31000
         //Entonces El sistema no registrará la consignación
         //AND presentará el mensaje. “El valor a consignar supera el saldo”.
 
@@ -84,7 +84,7 @@ namespace Banco.Domain.Test
         // y reducirá de manera equivalente el saldo.         
         //Dado El cliente tiene una tarjeta de credito
         //Número 10001, Nombre “Cuenta ejemplo”, Cupo de 300000
-        //Cuando Va a abonar el valor de 5000
+        //Cuando  abona el valor de 5000
         //Entonces El sistema no registrará la consignación
         //AND presentará el mensaje. “Abono exitoso”.
 
@@ -102,16 +102,20 @@ namespace Banco.Domain.Test
             Assert.AreEqual(tarjetaCredito.Cupo, 5000);
         }
 
-        /*
-        Escenario 1: El valor del avance debe ser mayor a 0.
-        HU 6.
-        Como Usuario quiero realizar retiros (avances) a una cuenta de crédito para retirar dinero en
-        forma de avances del servicio de crédito.
-        Criterios de Aceptación
-        6.1 El valor del avance debe ser mayor a 0.
-        6.2 Al realizar un avance se debe reducir el valor disponible del cupo con el valor del avance.
-        6.3 Un avance no podrá ser mayor al valor disponible del cupo.
-         */
+
+        //Escenario 1: El valor del avance debe ser mayor a 0.
+        //HU 6.
+        //Como Usuario quiero realizar retiros (avances) a una cuenta de crédito para retirar dinero en
+        //forma de avances del servicio de crédito.
+        //Criterios de Aceptación
+        //6.1 El valor del avance debe ser mayor a 0.
+        //6.2 Al realizar un avance se debe reducir el valor disponible del cupo con el valor del avance.
+        //6.3 Un avance no podrá ser mayor al valor disponible del cupo.
+        //Dado El cliente tiene una tarjeta de credito
+        //Número 10001, Nombre “Cuenta ejemplo”, Cupo de 300000
+        //Cuando realiza un avance de 0
+        //Entonces El sistema no hará efectivo el avance
+        //AND presentará el mensaje. “El Avance debe ser mayor a cero pesos”.
 
         [Test]
 
@@ -125,16 +129,21 @@ namespace Banco.Domain.Test
             Assert.AreEqual("El Avance debe ser mayor a cero pesos", resultado);
         }
 
-        /*
-       Escenario 2: Al realizar un avance se debe reducir el valor disponible del cupo con el valor del avance.
-       HU 6.
-       Como Usuario quiero realizar retiros (avances) a una cuenta de crédito para retirar dinero en
-       forma de avances del servicio de crédito.
-       Criterios de Aceptación
-       6.1 El valor del avance debe ser mayor a 0.
-       6.2 Al realizar un avance se debe reducir el valor disponible del cupo con el valor del avance.
-       6.3 Un avance no podrá ser mayor al valor disponible del cupo.
-        */
+
+
+        //Escenario 1: Al realizar un avance se debe reducir el valor disponible del cupo con el valor del avance.
+        //HU 6.
+        //Como Usuario quiero realizar retiros (avances) a una cuenta de crédito para retirar dinero en
+        //forma de avances del servicio de crédito.
+        //Criterios de Aceptación
+        //6.1 El valor del avance debe ser mayor a 0.
+        //6.2 Al realizar un avance se debe reducir el valor disponible del cupo con el valor del avance.
+        //6.3 Un avance no podrá ser mayor al valor disponible del cupo.
+        //Dado El cliente tiene una tarjeta de credito
+        //Número 10001, Nombre “Cuenta ejemplo”, Cupo de 300000
+        //Cuando realiza un avance de 50000
+        //Entonces El sistema  hará efectivo el avance
+        //AND presentará el mensaje. “Avance exitoso”.
 
         [Test]
 
@@ -148,16 +157,19 @@ namespace Banco.Domain.Test
             Assert.AreEqual("Avance exitoso", resultado);
         }
 
-        /*
-         Escenario 3: Un avance no podrá ser mayor al valor disponible del cupo.
-         HU 6.
-         Como Usuario quiero realizar retiros (avances) a una cuenta de crédito para retirar dinero en
-         forma de avances del servicio de crédito.
-         Criterios de Aceptación
-         6.1 El valor del avance debe ser mayor a 0.
-         6.2 Al realizar un avance se debe reducir el valor disponible del cupo con el valor del avance.
-         6.3 Un avance no podrá ser mayor al valor disponible del cupo.
-          */
+        //Escenario 1: Al realizar un avance se debe reducir el valor disponible del cupo con el valor del avance.
+        //HU 6.
+        //Como Usuario quiero realizar retiros (avances) a una cuenta de crédito para retirar dinero en
+        //forma de avances del servicio de crédito.
+        //Criterios de Aceptación
+        //6.1 El valor del avance debe ser mayor a 0.
+        //6.2 Al realizar un avance se debe reducir el valor disponible del cupo con el valor del avance.
+        //6.3 Un avance no podrá ser mayor al valor disponible del cupo.
+        //Dado El cliente tiene una tarjeta de credito
+        //Número 10001, Nombre “Cuenta ejemplo”, Cupo de 300000
+        //Cuando realiza un avance de 301000
+        //Entonces El sistema  hará efectivo el avance
+        //AND presentará el mensaje. “El Avance no puede ser mayor al cupo disponible”.
 
         [Test]
 
