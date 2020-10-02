@@ -14,17 +14,21 @@ namespace Banco.Domain.Test
         {
         }
 
-        /*
-        Escenario 1: El valor a abono no puede ser menor o igual a 0.
-        HU 5.
-        Como Usuario quiero realizar consignaciones (abonos) a una Tarjeta Crédito para abonar al saldo
-        del servicio.
-        Criterios de Aceptación
-        5.1 El valor a abono no puede ser menor o igual a 0.
-        5.2 El abono podrá ser máximo el valor del saldo de la tarjeta de crédito.
-        5.3 Al realizar un abono el cupo disponible aumentará con el mismo valor que el valor del abono
-        y reducirá de manera equivalente el saldo.         
-        */
+        //
+        //Escenario 1: El valor a abono no puede ser menor o igual a 0.
+        //HU 5.
+        //Como Usuario quiero realizar consignaciones (abonos) a una Tarjeta Crédito para abonar al saldo
+        //del servicio.
+        //Criterios de Aceptación
+        //5.1 El valor a abono no puede ser menor o igual a 0.
+        //5.2 El abono podrá ser máximo el valor del saldo de la tarjeta de crédito.
+        // 5.3 Al realizar un abono el cupo disponible aumentará con el mismo valor que el valor del abono
+        // y reducirá de manera equivalente el saldo.         
+        //Dado El cliente tiene una tarjeta de credito
+        //Número 10001, Nombre “Cuenta ejemplo”, Cupo de 5000000
+        //Cuando Va a abonar un valor menor o igual a Cero
+        //Entonces El sistema no registrará la consignación
+        //AND presentará el mensaje. “El valor mínimo de la primera consignación debe ser mayor a cero pesos”.
 
         [Test]
 
@@ -38,17 +42,22 @@ namespace Banco.Domain.Test
             Assert.AreEqual("El valor mínimo de la primera consignación debe ser mayor a cero pesos", resultado);
         }
 
-        /*
-       Escenario 2: El abono podrá ser máximo el valor del saldo de la tarjeta de crédito.
-       HU 5.
-       Como Usuario quiero realizar consignaciones (abonos) a una Tarjeta Crédito para abonar al saldo
-       del servicio.
-       Criterios de Aceptación
-       5.1 El valor a abono no puede ser menor o igual a 0.
-       5.2 El abono podrá ser máximo el valor del saldo de la tarjeta de crédito.
-       5.3 Al realizar un abono el cupo disponible aumentará con el mismo valor que el valor del abono
-       y reducirá de manera equivalente el saldo.         
-       */
+
+        //
+        //Escenario 1: El abono no puede superar el saldo total de la tarjeta
+        //HU 5.
+        //Como Usuario quiero realizar consignaciones (abonos) a una Tarjeta Crédito para abonar al saldo
+        //del servicio.
+        //Criterios de Aceptación
+        //5.1 El valor a abono no puede ser menor o igual a 0.
+        //5.2 El abono podrá ser máximo el valor del saldo de la tarjeta de crédito.
+        // 5.3 Al realizar un abono el cupo disponible aumentará con el mismo valor que el valor del abono
+        // y reducirá de manera equivalente el saldo.         
+        //Dado El cliente tiene una tarjeta de credito
+        //Número 10001, Nombre “Cuenta ejemplo”, Cupo de 30000
+        //Cuando Va a abonar el valor de 31000
+        //Entonces El sistema no registrará la consignación
+        //AND presentará el mensaje. “El valor a consignar supera el saldo”.
 
         [Test]
 
@@ -62,18 +71,22 @@ namespace Banco.Domain.Test
             Assert.AreEqual("El valor a consignar supera el saldo", resultado);
         }
 
-        /*
-        Escenario 3: Al realizar un abono el cupo disponible aumentará con el mismo valor que el valor del abono
-        y reducirá de manera equivalente el saldo.
-        HU 5.
-        Como Usuario quiero realizar consignaciones (abonos) a una Tarjeta Crédito para abonar al saldo
-        del servicio.
-        Criterios de Aceptación
-        5.1 El valor a abono no puede ser menor o igual a 0.
-        5.2 El abono podrá ser máximo el valor del saldo de la tarjeta de crédito.
-        5.3 Al realizar un abono el cupo disponible aumentará con el mismo valor que el valor del abono
-        y reducirá de manera equivalente el saldo.         
-        */
+
+        //
+        //Escenario 1: Aumentar el valor del cupo al realizar una consignacion
+        //HU 5.
+        //Como Usuario quiero realizar consignaciones (abonos) a una Tarjeta Crédito para abonar al saldo
+        //del servicio.
+        //Criterios de Aceptación
+        //5.1 El valor a abono no puede ser menor o igual a 0.
+        //5.2 El abono podrá ser máximo el valor del saldo de la tarjeta de crédito.
+        // 5.3 Al realizar un abono el cupo disponible aumentará con el mismo valor que el valor del abono
+        // y reducirá de manera equivalente el saldo.         
+        //Dado El cliente tiene una tarjeta de credito
+        //Número 10001, Nombre “Cuenta ejemplo”, Cupo de 300000
+        //Cuando Va a abonar el valor de 5000
+        //Entonces El sistema no registrará la consignación
+        //AND presentará el mensaje. “Abono exitoso”.
 
         [Test]
 
