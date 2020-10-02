@@ -24,7 +24,7 @@ namespace Banco.Core.Domain
         public double Interes { get; set; }
         public string Termino {get; set;}
 
-        public string Consignar(decimal valorConsignacion, string diaConsignacion, string mesConsignacion, string anioConsignacion)
+        public string Consignar(decimal valorConsignacion, string diaConsignacion, string mesConsignacion, string anioConsignacion, string ciudadConsignacion)
         {
             if (valorConsignacion < 1000000) return "El valor mínimo de la primera consignación debe de mínimo 1 millon de pesos";
             if (TieneConsignacion()) return "No puede realizar mas de una consignacion";
@@ -38,7 +38,7 @@ namespace Banco.Core.Domain
             return _movimientos.Any(t => t.Tipo == "CONSIGNACION");
         }
 
-        public string Retirar(decimal valorRetiro, string diaRetiro, string mesRetiro, string anioRetiro)
+        public string Retirar(decimal valorRetiro, string diaRetiro, string mesRetiro, string anioRetiro, string ciudadRetiro)
         {
             
             return "";

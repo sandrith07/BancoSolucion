@@ -8,25 +8,36 @@ namespace Banco.Core.Domain
     {
         public CuentaAhorro(string numero, string nombre, string ciudad) : base(numero, nombre, ciudad)
         {
+            Ciudad = ciudad;
         }
 
-        public override string Consignar(decimal valorConsignacion, string diaConsignacion, string mesConsignacion, string anioConsignacion)
+        public override string Consignar(decimal valorConsignacion, string diaConsignacion, string mesConsignacion, string anioConsignacion, string ciudadConsignacion)
         {
+            var costoTransaccion = 0;
+            string resultado = "";
             if (valorConsignacion <= 0) return "El valor a consignar es incorrecto";
 
             if (valorConsignacion < 50000 && NoTieneConsignacion())  return "El valor mínimo de la primera consignación debe ser de $50.000 mil pesos. Su nuevo saldo es $0 pesos";
+
+            if (Ciudad != ciudadConsignacion) {
+                costoTransaccion = 10000;
+                 resultado = $"Su Nuevo Saldo es de ${Saldo:n2} pesos m/c";
+            }
             
+
             var saldoAnterior = Saldo;
             Saldo += valorConsignacion;
 
-            _movimientos.Add(new CuentaBancariaMovimiento(saldoAnterior, valorConsignacion, 0, "CONSIGNACION", diaConsignacion, mesConsignacion, anioConsignacion));
-            return $"Su Nuevo Saldo es de ${Saldo:n2} pesos m/c";
+            _movimientos.Add(new CuentaBancariaMovimiento(saldoAnterior, valorConsignacion, 0, "CONSIGNACION", diaConsignacion, mesConsignacion, anioConsignacion, ciudadConsignacion));
+            Saldo -= costoTransaccion;
+            resultado = $"Su Nuevo Saldo es de ${Saldo:n2} pesos m/c";
+            return resultado;
 
         }
 
-        public override string Retirar(decimal valorRetiro, string diaRetiro, string mesRetiro, string anioRetiro)
+        public override string Retirar(decimal valorRetiro, string diaRetiro, string mesRetiro, string anioRetiro, string ciudadRetiro)
         {
-            var costoTransaccion = 0;
+            var costoRetiro = 0;
             var resultado = "";
 
             if (SaldoMenorVeinteMil()) return "No tiene fondos suficientes (minimo 20000)";
@@ -34,19 +45,19 @@ namespace Banco.Core.Domain
 
             if (CantidadRetiroMes(mesRetiro, anioRetiro) <= 3) resultado = "transaccion sin costo";
 
-            if (CantidadRetiroMes(mesRetiro, anioRetiro) >= 3)
+            if (CantidadRetiroMes(mesRetiro, anioRetiro) > 4)
             {
-                costoTransaccion = 5000;
+                costoRetiro = 5000;
                 resultado = "usted sobrepaso el número de transacciones gratis, por lo tanto se le descontaran 5 mil ";
             }
-
-
-
+            
 
             var saldoAnterior = Saldo;
-            Saldo = Saldo - (valorRetiro + costoTransaccion);
+            Saldo = Saldo - valorRetiro;
 
-            _movimientos.Add(new CuentaBancariaMovimiento(saldoAnterior, 0, valorRetiro, "RETIRO", diaRetiro, mesRetiro, anioRetiro));
+            _movimientos.Add(new CuentaBancariaMovimiento(saldoAnterior, 0, valorRetiro, "RETIRO", diaRetiro, mesRetiro, anioRetiro, ciudadRetiro));
+            Saldo -= costoRetiro;
+            _movimientos.Add(new CuentaBancariaMovimiento(saldoAnterior, 0, costoRetiro, "RETIRO", diaRetiro, mesRetiro, anioRetiro, ciudadRetiro));
 
             return resultado;
         }
@@ -65,5 +76,6 @@ namespace Banco.Core.Domain
 
             return cantidadMovimientoMes;
         }
+
     }
 }

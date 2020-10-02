@@ -33,7 +33,7 @@ namespace Banco.Domain.Test
             //Preparar
             var cuentaAhorro = new CuentaAhorro(numero: "10001", nombre: "Cuenta Ahorro", ciudad: "Valledupar");
             //Acción
-            var resultado = cuentaAhorro.Consignar(0, "01", "12", "2020");
+            var resultado = cuentaAhorro.Consignar(0, "01", "12", "2020", "Valledupar");
             //Verificación
             Assert.AreEqual("El valor a consignar es incorrecto", resultado);
         }
@@ -54,7 +54,7 @@ namespace Banco.Domain.Test
             //Preparar
             var cuentaAhorro = new CuentaAhorro(numero: "10001", nombre: "Cuenta Ahorro", ciudad: "Valledupar");
             //Acción
-            var resultado = cuentaAhorro.Consignar(50000, "01", "12", "2020");
+            var resultado = cuentaAhorro.Consignar(50000, "01", "12", "2020", "Valledupar");
             //Verificación
             Assert.AreEqual("Su Nuevo Saldo es de $50.000,00 pesos m/c", resultado);
         }
@@ -76,7 +76,7 @@ namespace Banco.Domain.Test
             //Preparar
             var cuentaAhorro = new CuentaAhorro(numero: "10001", nombre: "Cuenta Ahorro", ciudad: "Valledupar");
             //Acción
-            var resultado = cuentaAhorro.Consignar(49999, "01", "12", "2020");
+            var resultado = cuentaAhorro.Consignar(49999, "01", "12", "2020","Valledupar");
             //Verificación
             Assert.AreEqual("El valor mínimo de la primera consignación debe ser de $50.000 mil pesos. Su nuevo saldo es $0 pesos", resultado);
         }
@@ -97,11 +97,40 @@ namespace Banco.Domain.Test
             //Preparar
             var cuentaAhorro = new CuentaAhorro(numero: "10001", nombre: "Cuenta Ahorro", ciudad: "Valledupar");
             //Acción
-            var consignacion1 = cuentaAhorro.Consignar(50000, "01", "12", "2020");
-            var retiro1 = cuentaAhorro.Retirar(20000, "01", "12", "2020");
-            var consignacion2 = cuentaAhorro.Consignar(49950, "01", "12", "2020");
+            var consignacion1 = cuentaAhorro.Consignar(50000, "01", "12", "2020", "Valledupar");
+            var retiro1 = cuentaAhorro.Retirar(20000, "01", "12", "2020", "Valledupar");
+            var consignacion2 = cuentaAhorro.Consignar(49950, "01", "12", "2020", "Valledupar");
             //Verificación
             Assert.AreEqual("Su Nuevo Saldo es de $79.950,00 pesos m/c", consignacion2);
+        }
+
+        /*
+        Escenario: Consignación posterior a la inicial correcta
+        HU: Como Usuario quiero realizar consignaciones a una cuenta de ahorro para salvaguardar el
+        dinero.
+        Criterio de Aceptación:
+        1.4 La consignación nacional (a una cuenta de otra ciudad) tendrá un costo de $10 mil pesos.
+        Dado El cliente tiene una cuenta de ahorro con un saldo de 30.000 perteneciente a una
+        sucursal de la ciudad de Bogotá y se realizará una consignación desde una sucursal
+        de la Valledupar.
+        Cuando Va a consignar el valor inicial de $49.950 pesos.
+        Entonces El sistema registrará la consignación restando el valor a consignar los 10 mil pesos.
+        AND presentará el mensaje. “Su Nuevo Saldo es de $69.950,00 pesos m/c”.
+         */
+
+        [Test]
+        public void ConsignacionNacionalCorrectaTest()
+        {
+            //Preparar
+            var cuentaAhorro = new CuentaAhorro(numero: "10001", nombre: "Cuenta Ahorro", ciudad: "Bogotá");
+            //Acción
+            var consignacion1 = cuentaAhorro.Consignar(50000, "01", "12", "2020", "Bogotá");
+            var retiro1 = cuentaAhorro.Retirar(20000, "01", "12", "2020", "Bogotá");
+            var consignacion2 = cuentaAhorro.Consignar(49950, "01", "12", "2020", "Valledupar");
+            //Verificación
+            Assert.AreEqual("Su Nuevo Saldo es de $69.950,00 pesos m/c", consignacion2);
+            
+
         }
 
 
@@ -123,7 +152,7 @@ namespace Banco.Domain.Test
             //Preparar
             var cuentaAhorro = new CuentaAhorro(numero: "10001", nombre: "Cuenta Ahorro", ciudad: "Valledupar");
             //Acción
-            var resultado = cuentaAhorro.Retirar(10000, "01", "12", "2020");
+            var resultado = cuentaAhorro.Retirar(10000, "01", "12", "2020", "Valledupar");
             //Verificación
             Assert.AreEqual("No tiene fondos suficientes (minimo 20000)", resultado);
         }
@@ -145,11 +174,15 @@ namespace Banco.Domain.Test
         {
             //Preparar
             var cuentaAhorro = new CuentaAhorro(numero: "10001", nombre: "Cuenta Ahorro", ciudad: "Valledupar");
-            var consignacion = cuentaAhorro.Consignar(50000, "01", "12", "2020");
+            var consignacion = cuentaAhorro.Consignar(100000, "01", "12", "2020", "Valledupar");
             //Acción
-            var resultado = cuentaAhorro.Retirar(20000, "01", "12", "2020");
+            var retiro1 = cuentaAhorro.Retirar(20000, "01", "01", "2020", "Valledupar");
+            var retiro2 = cuentaAhorro.Retirar(20000, "01", "01", "2020", "Valledupar");
+            var retiro3 = cuentaAhorro.Retirar(20000, "01", "01", "2020", "Valledupar");
             //Verificación
-             Assert.AreEqual("transaccion sin costo", resultado);
+            Assert.AreEqual("transaccion sin costo", retiro2);
+            Assert.AreEqual(cuentaAhorro.Saldo, 40000);
+            
         }
 
 
@@ -162,24 +195,24 @@ namespace Banco.Domain.Test
         //2.3 Los primeros 3 retiros del mes no tendrán costo.
         //2.4 Del cuarto retiro en adelante del mes tendrán un valor de 5 mil pesos.
 
-
+        
         [Test]
         public void RetirosConCostoCuentaAhorroTest()
         {  
             //Preparar
             var cuentaAhorro = new CuentaAhorro(numero: "10001", nombre: "Cuenta Ahorro", ciudad: "Valledupar");
-            var consignacion = cuentaAhorro.Consignar(70000, "01", "12", "2020");
+            var consignacion = cuentaAhorro.Consignar(100000, "01", "12", "2020", "Valledupar");
             //Acción
-            var retiro1 = cuentaAhorro.Retirar(2000, "01", "12", "2020");
-            var retiro2 = cuentaAhorro.Retirar(2000, "01", "12", "2020");
-            var retiro3 = cuentaAhorro.Retirar(2000, "01", "12", "2020");
-            var retiro4 = cuentaAhorro.Retirar(2000, "01", "12", "2020");
+            var retiro1 = cuentaAhorro.Retirar(10000, "01", "12", "2020", "Valledupar");
+            var retiro2 = cuentaAhorro.Retirar(10000, "01", "12", "2020", "Valledupar");
+            var retiro3 = cuentaAhorro.Retirar(10000, "01", "12", "2020", "Valledupar");
+            var retiro4 = cuentaAhorro.Retirar(10000, "01", "12", "2020", "Valledupar");
             //Verificación
             Assert.AreEqual("usted sobrepaso el número de transacciones gratis, por lo tanto se le descontaran 5 mil ", retiro4);
-            Assert.AreEqual(cuentaAhorro.Saldo, 57000);
+            Assert.AreEqual(cuentaAhorro.Saldo, 55000);
             
         }
-
+        
 
 
 

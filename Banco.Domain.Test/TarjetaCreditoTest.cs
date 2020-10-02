@@ -33,7 +33,7 @@ namespace Banco.Domain.Test
             //Preparar
             var tarjetaCredito = new TarjetaCredito(numero: "10001", nombre: "Cuenta Corriente", ciudad: "Valledupar", cupo: 5000000);
             //Acción
-            var resultado = tarjetaCredito.Consignar(0, "01", "12", "2020");
+            var resultado = tarjetaCredito.Consignar(0, "01", "12", "2020", "Valledupar");
             //Verificación
             Assert.AreEqual("El valor mínimo de la primera consignación debe ser mayor a cero pesos", resultado);
         }
@@ -57,7 +57,7 @@ namespace Banco.Domain.Test
             //Preparar
             var tarjetaCredito = new TarjetaCredito(numero: "10001", nombre: "Cuenta Corriente", ciudad: "Valledupar", cupo: 30000);
             //Acción
-            var resultado = tarjetaCredito.Consignar(31000, "01", "12", "2020");
+            var resultado = tarjetaCredito.Consignar(31000, "01", "12", "2020", "Valledupar");
             //Verificación
             Assert.AreEqual("El valor a consignar supera el saldo", resultado);
         }
@@ -82,7 +82,7 @@ namespace Banco.Domain.Test
             //Preparar
             var tarjetaCredito = new TarjetaCredito(numero: "10001", nombre: "Tarjeta de Credito", ciudad: "Valledupar", cupo: 300000);
             //Acción
-            var resultado = tarjetaCredito.Consignar(5000, "01", "12", "2020");
+            var resultado = tarjetaCredito.Consignar(5000, "01", "12", "2020", "Valledupar");
             //Verificación
             Assert.AreEqual("Abono exitoso", resultado);
             Assert.AreEqual(tarjetaCredito.Saldo, 295000);
@@ -107,7 +107,7 @@ namespace Banco.Domain.Test
             //Preparar
             var tarjetaCredito = new TarjetaCredito(numero: "10001", nombre: "Tarjeta de Credito", ciudad: "Valledupar", cupo: 300000);
             //Acción
-            var resultado = tarjetaCredito.Retirar(0, "01", "12", "2020");
+            var resultado = tarjetaCredito.Retirar(0, "01", "12", "2020", "Valledupar");
             //Verificación
             Assert.AreEqual("El Avance debe ser mayor a cero pesos", resultado);
         }
@@ -130,7 +130,7 @@ namespace Banco.Domain.Test
             //Preparar
             var tarjetaCredito = new TarjetaCredito(numero: "10001", nombre: "Tarjeta de Credito", ciudad: "Valledupar", cupo: 300000);
             //Acción
-            var resultado = tarjetaCredito.Retirar(50000, "01", "12", "2020");
+            var resultado = tarjetaCredito.Retirar(50000, "01", "12", "2020", "Valledupar");
             //Verificación
             Assert.AreEqual("Avance exitoso", resultado);
         }
@@ -153,7 +153,7 @@ namespace Banco.Domain.Test
             //Preparar
             var tarjetaCredito = new TarjetaCredito(numero: "10001", nombre: "Tarjeta de Credito", ciudad: "Valledupar", cupo: 300000);
             //Acción
-            var resultado = tarjetaCredito.Retirar(301000, "01", "12", "2020");
+            var resultado = tarjetaCredito.Retirar(301000, "01", "12", "2020", "Valledupar");
             //Verificación
             Assert.AreEqual("El Avance no puede ser mayor al cupo disponible", resultado);
         }

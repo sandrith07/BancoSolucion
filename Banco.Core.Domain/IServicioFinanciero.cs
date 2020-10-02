@@ -12,8 +12,8 @@ namespace Banco.Core.Domain
         decimal Saldo { get; }
 
 
-        string Consignar(decimal valorConsignacion, string diaConsignacion, string mesConsignacion, string anioConsignacion);
-        string Retirar(decimal valorRetiro, string diaRetiro, string mesRetiro,string anioRetiro);
+        string Consignar(decimal valorConsignacion, string diaConsignacion, string mesConsignacion, string anioConsignacion, string ciudadConsignacion);
+        string Retirar(decimal valorRetiro, string diaRetiro, string mesRetiro,string anioRetiro, string ciudadRetiro);
   
     }
 }

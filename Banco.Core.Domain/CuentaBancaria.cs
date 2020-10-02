@@ -18,13 +18,13 @@ namespace Banco.Core.Domain
 
         public string Numero { get; }
         public string Nombre { get; }
-        public string Ciudad { get; }
+        public string Ciudad { get; set; }
 
 
  
         public decimal Saldo { get; set; }
 
-        public virtual string Consignar(decimal valorConsignacion, string diaConsignacion, string mesConsignacion, string anioConsignacion)
+        public virtual string Consignar(decimal valorConsignacion, string diaConsignacion, string mesConsignacion, string anioConsignacion, string ciudadConsignacion)
         {
     
             return $"Su Nuevo Saldo es de ${Saldo:n2} pesos m/c";
@@ -37,7 +37,7 @@ namespace Banco.Core.Domain
 
 
 
-        public virtual string Retirar(decimal valorRetiro, string diaRetiro, string mesRetiro, string anioRetiro)
+        public virtual string Retirar(decimal valorRetiro, string diaRetiro, string mesRetiro, string anioRetiro, string ciudadRetiro)
 
         {
 
@@ -55,7 +55,7 @@ namespace Banco.Core.Domain
 
     public class CuentaBancariaMovimiento
     {
-        public CuentaBancariaMovimiento(decimal saldoAnterior, decimal valorCredito, decimal valorDebito, string tipo, string diaMovimiento, string mesMovimiento, string anioMovimiento)
+        public CuentaBancariaMovimiento(decimal saldoAnterior, decimal valorCredito, decimal valorDebito, string tipo, string diaMovimiento, string mesMovimiento, string anioMovimiento, string ciudadMovimiento)
         {
             SaldoAnterior = saldoAnterior;
             ValorCredito = valorCredito;
@@ -64,6 +64,7 @@ namespace Banco.Core.Domain
             DiaMovimiento = diaMovimiento;
             MesMovimiento = mesMovimiento;
             AnioMovimiento = anioMovimiento;
+            CiudadMovimiento = ciudadMovimiento;
         }
 
         public decimal SaldoAnterior { get; private set; }
@@ -73,6 +74,7 @@ namespace Banco.Core.Domain
         public string DiaMovimiento { get; private set; }
         public string MesMovimiento { get; private set; }
         public string AnioMovimiento { get; private set; }
-    
+        public string CiudadMovimiento { get; private set; }
+
     }
 }

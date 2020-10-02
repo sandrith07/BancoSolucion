@@ -21,7 +21,7 @@ namespace Banco.Core.Domain
 
         public string Ciudad { get; set; }
 
-        public string Consignar(decimal valorConsignacion, string diaConsignacion, string mesConsignacion, string anioConsignacion)
+        public string Consignar(decimal valorConsignacion, string diaConsignacion, string mesConsignacion, string anioConsignacion, string ciudadConsignacion)
         {
 
             if (valorConsignacion <= 0) return "El valor mínimo de la primera consignación debe ser mayor a cero pesos";
@@ -36,7 +36,7 @@ namespace Banco.Core.Domain
            return "Abono exitoso";
         }
 
-        public string Retirar(decimal valorRetiro, string diaRetiro, string mesRetiro, string anioRetiro)
+        public string Retirar(decimal valorRetiro, string diaRetiro, string mesRetiro, string anioRetiro, string ciudadRetiro)
         {
             if (valorRetiro <= 0) return "El Avance debe ser mayor a cero pesos";
             if (valorRetiro > Cupo) return "El Avance no puede ser mayor al cupo disponible";
