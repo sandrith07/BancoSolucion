@@ -61,7 +61,7 @@ namespace Banco.Domain.Test
             var resultado = cuentaCorriente.Consignar(700000, "01", "12", "2020", "Valledupar");
             //Verificación
             Assert.AreEqual("Su consignación ha sido exitosa", resultado);
-            Assert.AreEqual(cuentaCorriente.SobreGiro, 1000000);
+            Assert.AreEqual(cuentaCorriente.SobreGiro, 1700000);
 
         }
 
